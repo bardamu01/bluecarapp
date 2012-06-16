@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BlueCar</string>
+    <string name="device_prompt">Select a device:</string>
+    <string-array name="devices_array">
+    </string-array>
+</resources>
