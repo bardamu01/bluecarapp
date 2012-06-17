@@ -24,7 +24,6 @@ public class PieTouchAreaTest extends TestCase {
         assertEquals(6, new PieTouchArea(150, 8, new Point(145,145), -30).getArea(new Point(10,139)));
         assertEquals(7, new PieTouchArea(150, 8, new Point(145,145), -30).getArea(new Point(58,51)));
 
-
         //out of range
         assertEquals(-1, new PieTouchArea(3, 6, null, 0).getArea(new Point(4, 4)));
 

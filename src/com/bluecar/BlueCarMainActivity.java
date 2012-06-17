@@ -105,26 +105,39 @@ public class BlueCarMainActivity extends Activity {
         }
     }
 
-    public void connect(View view) {
+
+    public void toggleConnection(View view){
+        ToggleButton tb = (ToggleButton) view;
+        if (tb.isChecked())
+            tb.setChecked(connect(view));
+        else
+            disconnect(view);
+    }
+
+    private boolean connect(View view) {
         if (D) Log.d(TAG, "Establishing connection to: " + btDevice.getName());
 
         try{
             btSocket = btDevice.createRfcommSocketToServiceRecord(SPP_UUID);
             btSocket.connect();
             Toast.makeText(this, "Connected to: " + btDevice.getName(), Toast.LENGTH_LONG).show();
+            return true;
         } catch (IOException e) {
             Toast.makeText(this, "Failed to connect to: " + btDevice.getName(), Toast.LENGTH_LONG).show();
             Log.e(TAG, e.getLocalizedMessage());
         }
+        return false;
     }
 
-    public void disconnect(View view){
+    private boolean disconnect(View view){
         try {
             btSocket.close();
             Toast.makeText(this, "Disconnected from: " + btDevice.getName(), Toast.LENGTH_LONG).show();
+            return true;
         } catch (IOException e) {
             Log.e(TAG, e.getLocalizedMessage());
         }
+        return false;
     }
 
 
