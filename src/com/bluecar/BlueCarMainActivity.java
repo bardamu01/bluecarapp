@@ -64,11 +64,12 @@ public class BlueCarMainActivity extends Activity {
         if (D) Log.d(TAG, "++ ON START ++");
 
         if (!mBluetoothAdapter.isEnabled()) {
+            // ask the user to enable BlueTooth
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-            // Otherwise, setup the chat session
         } else {
-            if (D) Log.d(TAG, "bt already enabled");
+            // this only works if you already bonded with this device
+            if (D) Log.d(TAG, "BT already enabled");
 
             final BluetoothDevice[] bondedDevices = new BluetoothDevice[mBluetoothAdapter.getBondedDevices().size()];
             mBluetoothAdapter.getBondedDevices().toArray(bondedDevices);
@@ -100,11 +101,11 @@ public class BlueCarMainActivity extends Activity {
 
                     }
             );
-
-
         }
     }
 
+
+    // connection related
 
     public void toggleConnection(View view){
         ToggleButton tb = (ToggleButton) view;
@@ -145,13 +146,18 @@ public class BlueCarMainActivity extends Activity {
 
     class ControlsTouchListener implements View.OnTouchListener{
 
-
+        PieTouchArea pie = null;
 
         public boolean onTouch(View view, MotionEvent motionEvent){
             int viewHeight = view.getHeight();
             int viewWidth = view.getWidth();
+            Point currentPosition = new Point(viewWidth/2, viewHeight/2);
 
-            PieTouchArea pie = new PieTouchArea(150, 8, new Point(viewWidth/2, viewHeight/2), -22);
+            if ( pie == null ||
+                 ( pie != null && pie.getPosition().equals(currentPosition) )
+                ){
+                pie = new PieTouchArea(150, 8, currentPosition, -22);
+            }
 
             int area = pie.getArea(new Point(motionEvent.getX(), motionEvent.getY()));
 
@@ -196,6 +202,7 @@ public class BlueCarMainActivity extends Activity {
 
 
     // activity related
+
     @Override
     public synchronized void onResume() {
         super.onResume();

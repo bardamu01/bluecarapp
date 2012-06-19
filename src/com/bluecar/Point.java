@@ -15,4 +15,8 @@ public class Point{
        return hypot((this.x - another.x), (this.y - another.y));
     }
 
+    public boolean equals(java.lang.Object o) {
+        Point p = (Point) o;
+        return p.x == x && p.y == y;
+    }
 }

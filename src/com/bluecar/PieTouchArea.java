@@ -71,4 +71,7 @@ public class PieTouchArea {
         return (int) ( degrees / (360/ slices) );
     }
 
+    public Point getPosition() {
+        return position;
+    }
 }
